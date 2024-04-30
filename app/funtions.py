@@ -1,8 +1,6 @@
 from .constants import PATH_TRASH
-from fuzzywuzzy import fuzz
 import concurrent.futures
 from shutil import rmtree
-from typing import Union
 from uuid import uuid4
 import requests
 import fastdup
@@ -65,76 +63,6 @@ def download_imgs(urls: list, path: str) -> list:
     return results
 
 ############################### end
-
-def compare_text(
-    consultation: Union[dict, list] = None
-    ) -> dict:
-    
-    similarity_score =  lambda str1, str2 :  fuzz.ratio(str1, str2)
-    
-    def has_id(object: dict) -> tuple:
-        
-        if 'id' in object.keys():
-            
-            return True, {}
-        
-        else:
-            
-            msm_error = {
-                'error': 'there is an object that does not contain id',
-                'object': object
-            }
-            
-            return False, msm_error
-        
-        
-
-    result: Union[list, dict]
-    
-    if isinstance(consultation, dict):
-        
-        is_ok, msm = has_id(consultation)
-        
-        if is_ok:
-            
-            id_ =  consultation["id"]
-            string_1 = format(consultation["string_1"])
-            string_2 = format(consultation["string_2"])
-            
-            result = {
-                'id': id_,
-                'similarity': similarity_score(string_1, string_2)
-            }
-        
-        else:
-            
-            return msm
-    
-    if isinstance(consultation, list):
-        
-        result = []
-        
-        for consul in consultation:
-            
-            is_ok, msm = has_id(consul)
-            
-            if is_ok:
-                
-                id_ =  consul["id"]
-                string_1 = format(consul["string_1"])
-                string_2 = format(consul["string_2"])
-                
-                result.append(
-                    {
-                        'id': id_,
-                        'similarity': similarity_score(string_1, string_2)
-                    }
-                )
-            else:
-                
-                return msm
-    
-    return result
 
 
 def compare_img(url_img_1: list = None, url_img_2: list = None) -> dict:

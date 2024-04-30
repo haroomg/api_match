@@ -1,12 +1,20 @@
+from typing import List, Optional
 from pydantic import BaseModel
 from typing import Union
 
-class Compare_texts(BaseModel):
+class TextComparation(BaseModel):
     
-    consultation: Union[dict, list] 
+    id: int
+    string_1: str
+    string_2: str
 
 
-class Compare_img(BaseModel):
+class TextListComparation(BaseModel):
+    
+    data: List[TextComparation]
+
+class ImageComparation(BaseModel):
     
     url_img_1: list
     url_img_2: list
+    
