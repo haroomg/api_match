@@ -45,4 +45,8 @@ def compare_img_api(request: ImageComparation):
     url_img_1: list = request.url_img_1
     url_img_2: list = request.url_img_2
     
-    return compare_img()
+    result = compare_img(url_img_1, url_img_2)
+    
+    print(result)
+    
+    return result

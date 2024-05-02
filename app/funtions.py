@@ -100,10 +100,20 @@ def compare_img(url_img_1: list = None, url_img_2: list = None) -> dict:
     
     rmtree(new_path)
     
-    result = {
-        'prome': round(similarity['distance'].mean(), 3),
-        'max': round(similarity['distance'].max(), 3),
-        'min': round(similarity['distance'].min(), 3)
-    }
+    if similarity.shape[0]:
+    
+        result = {
+            'mean': similarity['distance'].mean(),
+            'max': similarity['distance'].max(),
+            'min': similarity['distance'].min()
+        }
+        
+    else:
+        
+        result = {
+            'mean': 0,
+            'max': 0,
+            'min': 0
+        }
     
     return result
